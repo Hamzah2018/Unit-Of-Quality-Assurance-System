@@ -1,0 +1,52 @@
+ create table college(
+ coll_no number(2),
+ coll_name varchar2(50),
+ constraint copk primary key(coll_no))
+/
+create table dept(
+coll_no number(2),
+dept_no number(2),
+dept_name varchar2(50),
+constraint dpk primary key(coll_no,dept_no),
+constraint cfk foreign key(coll_no) references college(coll_no))
+/
+create table spec(
+coll_no number(2),
+dept_no number(2),
+sp_no number(2),
+sp_name varchar2(50),
+constraint spk primary key(coll_no,dept_no,sp_no),
+constraint cffk foreign key(coll_no,dept_no) references dept(coll_no,dept_no))
+/
+create table subject(
+sub_no number(4),
+sp_name varchar2(50),
+constraint sbk primary key(sub_no))
+/
+create table spec_st(
+sp_no number(5),
+sp_name varchar2(50),
+constraint sbbk primary key(sp_no))
+/
+create table sttaf(
+stt_no number(5),
+stt_name varchar2(50),
+b_date date,
+qualif number(1),
+sp_no number(5),
+grade_date date,
+phon_no varchar2(40),
+constraint sttk primary key(stt_no),
+constraint sttf_fk foreign key(sp_no) references spec_st(sp_no))
+/
+create table stt_subj(
+coll_no number(2),
+dept_no number(2),
+sp_no number(2),
+stt_no number(5),
+sub_no number(4),
+sub_state number(1),
+constraint s1ffk foreign key(coll_no,dept_no,sp_no) references spec(coll_no,dept_no,sp_no),
+constraint s2fffk foreign key (sub_no) references subject(sub_no),
+constraint s2ffk foreign key (stt_no) references sttaf(stt_no))
+/
